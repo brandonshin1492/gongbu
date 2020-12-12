@@ -7,4 +7,7 @@ config.json
 sandbox.js
 
 # bot debug commands
-commands/debug/
+# commands/debug/
+
+# new command template file
+commands/command-template.js
