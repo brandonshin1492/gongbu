@@ -3,7 +3,9 @@
 node_modules/
 config.json
 
-# personal testing sandbox thing
+# misc other files
+basic_command_index.js
+command.js
 sandbox.js
 
 # bot debug commands
