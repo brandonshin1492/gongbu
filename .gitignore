@@ -1,5 +1,10 @@
+# node stuff
 *.log
 node_modules/
 config.json
 
+# personal testing sandbox thing
 sandbox.js
+
+# bot debug commands
+commands/debug/
