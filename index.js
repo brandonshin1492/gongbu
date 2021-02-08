@@ -16,11 +16,12 @@ const streamOptions = {
 // other node packages
 const fs = require('fs');
 const path = require('path');
+const lineReader = require('line-reader');
 
 // config json file
 const config = require('./config.json');
 
-client.login(config.token);
+client.login(process.env.BOT_TOKEN);
 
 client.on('ready', async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
@@ -49,5 +50,20 @@ client.on('ready', async () => {
         }
     }
 
+    // read in all commands from command directory
     readCommands('commands');
+
+    // clear locked_users.txt file for the .lock and .unlock commands
+    fs.writeFileSync('locked_users.txt', '', 'utf-8');
+});
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (newState.channel) {
+        lineReader.eachLine('locked_users.txt', line => {
+            if (newState.id === line) {
+                newState.setChannel(null);
+                console.log(`booted locked user ${newState.id}`);
+            }
+        });
+    }
 });
