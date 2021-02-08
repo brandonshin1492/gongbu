@@ -19,7 +19,9 @@ const path = require('path');
 const lineReader = require('line-reader');
 
 // config json file
-const config = require('./config.json');
+// const config = require('./config.json');
+const prefix = process.env.BOT_PREFIX;
+
 
 client.on('ready', async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
@@ -43,7 +45,7 @@ client.on('ready', async () => {
 
                 // run the command-base.js code to perform validation + message handling
                 commandBase(client, options);
-                console.log(`successfully registered command ${config.prefix}${options.name}`);
+                console.log(`successfully registered command ${prefix}${options.name}`);
             }
         }
     }

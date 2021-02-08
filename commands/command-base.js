@@ -1,4 +1,5 @@
-const { prefix } = require('../config.json');
+// const { prefix } = require('../config.json');
+const prefix = process.env.BOT_PREFIX;
 
 // string for code blocks in discord messages
 const cblock = '```';
