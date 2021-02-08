@@ -1,5 +1,5 @@
 /*
-* Yeet
+* Yeet we go
 */
 
 // discord packages
