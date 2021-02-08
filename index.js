@@ -21,8 +21,6 @@ const lineReader = require('line-reader');
 // config json file
 const config = require('./config.json');
 
-client.login(process.env.BOT_TOKEN);
-
 client.on('ready', async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
 
@@ -67,3 +65,5 @@ client.on('voiceStateUpdate', (oldState, newState) => {
         });
     }
 });
+
+client.login(process.env.BOT_TOKEN);
