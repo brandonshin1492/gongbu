@@ -7,8 +7,8 @@
 const { TeamMember, MessageManager } = require("discord.js");
 
 module.exports = {
-    name: 'join',
-    commands: ['join', 'study'],
+    name: 'leave',
+    commands: ['leave'],
     expectedArgs: '',
     minArgs: 0,
     maxArgs: 0,
