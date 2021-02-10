@@ -4,6 +4,7 @@ node_modules/
 config.json
 
 # misc other files (sandbox, old files, etc.)
+*.Zone.Identifier
 sounds/jesus.mp3
 basic_command_index.js
 command.js
