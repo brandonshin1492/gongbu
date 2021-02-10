@@ -13,7 +13,7 @@ module.exports = {
     minArgs: 0,
     maxArgs: 0,
     permissions: [],
-    requiredRoles: [],
+    requiredRoles: ['bot test'],
     callback: (message, args) => {
         // FILL IN COMMAND CODE HERE
         console.log('join called yeet');

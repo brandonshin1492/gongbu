@@ -19,9 +19,13 @@ const path = require('path');
 const lineReader = require('line-reader');
 
 // config json file
-// const config = require('./config.json');
-const prefix = process.env.BOT_PREFIX;
+const config = require('./config.json');
+var prefix = process.env.BOT_PREFIX;
+var token = process.env.BOT_TOKEN;
 
+// local testing
+prefix = config.prefix;
+token = config.token;
 
 client.on('ready', async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
@@ -68,4 +72,4 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 });
 
-client.login(process.env.BOT_TOKEN);
+client.login(token);
