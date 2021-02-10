@@ -24,8 +24,8 @@ var prefix = process.env.BOT_PREFIX;
 var token = process.env.BOT_TOKEN;
 
 // local testing
-prefix = config.prefix;
-token = config.token;
+// prefix = config.prefix;
+// token = config.token;
 
 client.on('ready', async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
