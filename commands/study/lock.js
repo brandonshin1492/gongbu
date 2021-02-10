@@ -42,6 +42,13 @@ module.exports = {
 
         // bot join functionality
         if (message.member.voice.channel) {
+            const vcons = message.client.voice.connections;
+            const curr_vcon = vcons.find(vcon => vcon.voice.guild.id === message.guild.id);
+            if (curr_vcon) {
+                message.channel.send('already in a voice channel');
+                return;
+            }
+
             // bot joins channel in place of locked user
             const vconn = message.member.voice.channel.join()
                 .then(connection => console.log(`connected to channel ${connection.channel.name}!`))
