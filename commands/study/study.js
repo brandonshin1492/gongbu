@@ -4,7 +4,7 @@
 *  Function: Puts user into study mode
 */
 
-const temp = 'postgres://oxuuzjyicuagaq:15fc95d7b38afd78306af89d0febeb381f2ce02a5def477de63ed1800f1228e6@ec2-3-222-11-129.compute-1.amazonaws.com:5432/d5jtedjbmnj0d9';
+const temp = 'REDACTED';
 const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
