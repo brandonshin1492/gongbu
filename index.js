@@ -19,7 +19,7 @@ const path = require('path');
 const lineReader = require('line-reader');
 
 // config json file
-const config = require('./config.json');
+//const config = require('./config.json');
 var prefix = process.env.BOT_PREFIX;
 var token = process.env.BOT_TOKEN;
 
