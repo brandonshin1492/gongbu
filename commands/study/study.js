@@ -59,7 +59,7 @@ module.exports = {
 
         // check if table for server exists; if not, create one
         // EDIT: can use CREATE TABLE IF NOT EXISTS <name> <cols>
-        const table_name = `${guildid}-study`
+        const table_name = `study-${guildid}`
         const table_create_query = `CREATE TABLE IF NOT EXISTS study_status.${table_name} (uid char(${SF_LEN}), status varchar(10), prev_channel char(${SF_LEN}))`
         pool.query(table_create_query, (err, res) => {
             if (err) console.log('table creation error'); throw err;
@@ -69,6 +69,15 @@ module.exports = {
         // EDIT: can use INSERT ___ ON CONFLICT DO UPDATE
         var insertion_query;
         if (args[0] == 'lock') {
+            // verify the user isn't currently studying
+            pool.query(`SELECT status FROM study_status.${table_name} WHERE uid = '${userid}`, (err, res) => {
+                if (err) {console.log('error querying user study status, for .study lock'); return;}
+                if (res.status !== 'free') {
+                    message.channel.send('you arent studying right now');
+                    return;
+                }
+            })
+
             // update the table with the user's new status and prev voice channel
             pool.query(`INSERT INTO study_status.${table_name} VALUES ('${userid}', 'studying', '${member.voice.channel}') ON CONFLICT DO UPDATE`, (err, res) => {
                 if (err) { console.log('lock status error'); throw err; }
@@ -101,7 +110,5 @@ module.exports = {
         }
         
         pool.end();
-
-        message.channel.send('done');
     }
 }
