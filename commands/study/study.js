@@ -24,7 +24,7 @@ module.exports = {
             args.push('lock');
         }
 
-        if (args[0] !== 'lock' || args[0] !== 'release') {
+        if (args[0] !== 'lock' && args[0] !== 'release') {
             message.channel.send('invalid args, need to pass `lock` or `release`');
             return;
         }
