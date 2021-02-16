@@ -16,7 +16,7 @@ const streamOptions = {
 // other node packages
 const fs = require('fs');
 const path = require('path');
-const lineReader = require('line-reader');
+const { Pool } = require('pg');
 
 // config json file
 //const config = require('./config.json');
@@ -57,19 +57,22 @@ client.on('ready', async () => {
     // read in all commands from command directory
     readCommands('commands');
 
-    // clear locked_users.txt file for the .lock and .unlock commands
-    fs.writeFileSync('locked_users.txt', '', 'utf-8');
-});
+    // reset study_status schema from database on each reload
+    // create connection to database
+    const pool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+        rejectUnauthorized: false
+        }
+    });
 
-client.on('voiceStateUpdate', (oldState, newState) => {
-    if (newState.channel) {
-        lineReader.eachLine('locked_users.txt', line => {
-            if (newState.id === line) {
-                newState.setChannel(null);
-                console.log(`booted locked user ${newState.id}`);
-            }
-        });
-    }
+    pool.connect();
+
+    pool.query('DROP SCHEMA study_status CASCADE; CREATE SCHEMA study_status', (err, res) => {
+        if (err) throw err;
+        console.log('successfully resetted the study_status schema');
+        pool.end();
+    });
 });
 
 client.login(token);
