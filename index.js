@@ -18,14 +18,15 @@ const fs = require('fs');
 const path = require('path');
 const { Pool } = require('pg');
 
-// config json file
-//const config = require('./config.json');
+// config json file (local testing)
+// const config = require('./config.json');
+// prefix = config.prefix;
+// token = config.token;
+
+/* UNCOMMENT BEFORE DEPLOYING */
 var prefix = process.env.BOT_PREFIX;
 var token = process.env.BOT_TOKEN;
 
-// local testing
-// prefix = config.prefix;
-// token = config.token;
 
 client.on('ready', async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
