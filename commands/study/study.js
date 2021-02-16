@@ -59,7 +59,7 @@ module.exports = {
 
         // check if table for server exists; if not, create one
         // EDIT: can use CREATE TABLE IF NOT EXISTS <name> <cols>
-        const table_name = `study-${guildid}`
+        const table_name = `study_${guildid}`
         const table_create_query = `CREATE TABLE IF NOT EXISTS study_status.${table_name} (uid char(${SF_LEN}), status varchar(10), prev_channel char(${SF_LEN}))`
         pool.query(table_create_query, (err, res) => {
             if (err) console.log('table creation error'); throw err;
