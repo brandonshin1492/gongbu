@@ -62,7 +62,10 @@ module.exports = {
         const table_name = `study_${guildid}`
         const table_create_query = `CREATE TABLE IF NOT EXISTS study_status.${table_name} (uid char(${SF_LEN}), status varchar(10), prev_channel char(${SF_LEN}))`
         pool.query(table_create_query, (err, res) => {
-            if (err) console.log('table creation error'); throw err;
+            if (err) {
+                console.log('table creation error');
+                throw err;
+            }
         });
 
         // create query that will (1) insert user if they don't have a row, and (2) update their study status
@@ -71,8 +74,10 @@ module.exports = {
         if (args[0] == 'lock') {
             // verify the user isn't currently studying
             pool.query(`SELECT status FROM study_status.${table_name} WHERE uid = '${userid}`, (err, res) => {
-                if (err) {console.log('error querying user study status, for .study lock'); return;}
-                if (res.status !== 'free') {
+                if (err) {
+                    console.log('error querying user study status, for .study lock');
+                    return;
+                } else if (res.status !== 'free') {
                     message.channel.send('you arent studying right now');
                     return;
                 }
@@ -80,7 +85,9 @@ module.exports = {
 
             // update the table with the user's new status and prev voice channel
             pool.query(`INSERT INTO study_status.${table_name} VALUES ('${userid}', 'studying', '${member.voice.channel}') ON CONFLICT DO UPDATE`, (err, res) => {
-                if (err) { console.log('lock status error'); throw err; }
+                if (err) {
+                    console.log('lock status error'); throw err;
+                }
             });
 
             // move the user into the "study zone", AKA the channel that the bot is currently in (`curr_vcon`), and deafen them
@@ -90,10 +97,16 @@ module.exports = {
         } else if (args[0] == 'release') {
             // verify the user is currently studying/has a record in the table; if so, move back to prev channel
             pool.query(`SELECT status, prev_channel FROM study_status.${table_name} WHERE uid = '${userid}'`, (err, res) => {
-                if (err) { message.channel.send('you arent currently studying'); return; }
-                else if (!res) { console.log('could not find that user; aborting'); return; }
-                else if (res.status !== 'studying') { message.channel.send('you arent currently studying'); return; }
-                else {
+                if (err) {
+                    message.channel.send('you arent currently studying');
+                    return;
+                } else if (!res) {
+                    console.log('could not find that user; aborting');
+                    return;
+                } else if (res.status !== 'studying') {
+                    message.channel.send('you arent currently studying');
+                    return;
+                } else {
                     // undeafen the user, and move them back to their previous channel
                     member.voice.setDeaf(false, 'done studying');
                     member.voice.setChannel(res.prev_channel);
@@ -102,7 +115,10 @@ module.exports = {
 
             // update the table to reflect the users new status
             pool.query(`INSERT INTO study_status.${table_name} VALUES ('${userid}', 'free', null) ON CONFLICT DO UPDATE`, (err, res) => {
-                if (err) { console.log('release status error'); throw err; }
+                if (err) {
+                    console.log('release status error');
+                    throw err;
+                }
             });
         } else {
             console.log("HOW DID THIS EVEN HAPPEN??? args values need to be checked more rigorously");
