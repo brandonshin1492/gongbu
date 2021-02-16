@@ -12,6 +12,7 @@ sandbox.js
 
 # bot debug commands
 # commands/debug/
+commands/deprecated/
 
 # new command template file
 commands/command-template.js
