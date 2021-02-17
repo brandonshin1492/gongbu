@@ -1,10 +1,10 @@
 /* Base command file that handles general command execution flow. */
 
 /* UNCOMMENT BEFORE DEPLOYING */
-// var prefix = process.env.BOT_PREFIX;
+var prefix = process.env.BOT_PREFIX;
 
 // local testing
-var { prefix } = require('../config.json');
+// var { prefix } = require('../config.json');
 
 // string for code blocks in discord messages
 const cblock = '```';

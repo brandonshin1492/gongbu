@@ -49,8 +49,7 @@ module.exports = {
 
         // create connection to database
         const pool = new Pool({
-            //connectionString: process.env.DATABASE_URL,
-            connectionString: 'postgres://eafwzmndmiqncl:647e8239f1c94b5fb6bc7066c98fcdf25c9c6535c97e2be8e632d03f86811158@ec2-3-222-11-129.compute-1.amazonaws.com:5432/d5jtedjbmnj0d9',
+            connectionString: process.env.DATABASE_URL,
             ssl: {
             rejectUnauthorized: false
             }
